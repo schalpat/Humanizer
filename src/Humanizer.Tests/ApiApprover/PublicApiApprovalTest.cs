@@ -8,7 +8,8 @@ namespace Humanizer.Tests.ApiApprover
     public class PublicApiApprovalTest
     {
         [Fact]
-        [UseReporter(typeof(DiffReporter))] 
+        [UseReporter(typeof(DiffReporter))]
+        [IgnoreLineEndings(true)]
         public void approve_public_api()
         {
             var assembly = typeof(StringHumanizeExtensions).Assembly;

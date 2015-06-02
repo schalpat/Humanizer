@@ -3,7 +3,7 @@
   <!--Project configuration-->
   <Import Project="Build.config" />
   
-  <UsingTask TaskName="xunit" AssemblyFile="$(XUnitPath)\xunit.runner.msbuild.dll" />
+  <UsingTask Condition=" '$(OS)' != 'Unix' " TaskName="xunit" AssemblyFile="$(XUnitPath)\xunit.runner.msbuild.dll" />
 
   <!--Clean-->
   <Target Name="CleanAll" DependsOnTargets="CleanDebug;CleanRelease" />
@@ -15,13 +15,14 @@
   </Target>
 
   <!--Compile-->
-  <Target Name="Build" DependsOnTargets="CleanAll;RestorePackages">
-    <MSBuild Projects="@(ProjectToBuild)" Properties="Configuration=Release" />
+  <Target Name="Build" DependsOnTargets="RestorePackages">
+    <MSBuild Projects="@(ProjectToBuild)" Targets="Rebuild" Properties="Configuration=Release"/>
   </Target>
 
   <!--Test. Note that the GetTestAssemblies Task MUST BE defined in the Build.config file. -->
   <Target Name="Test" DependsOnTargets="GetTestAssemblies">
-    <xunit Assemblies="@(TestAssemblies)" />
+    <xunit Condition=" '$(OS)' != 'Unix' " Assemblies="@(TestAssemblies)" />
+    <Exec Condition=" '$(OS)' == 'Unix' " Command="mono &quot;$(XUnitPath)\xunit.console.clr4.exe&quot; /silent @(TestAssemblies)" />
   </Target>
 
   <!--Release-->
@@ -41,7 +42,8 @@
   </ItemGroup>
 
   <Target Name="RestorePackages">
-    <Exec Command="&quot;$(MSBuildThisFileDirectory)tools\NuGet\NuGet.exe&quot; restore &quot;%(Solution.Identity)&quot;" />
+    <Exec Condition=" '$(OS)' != 'Unix' " Command="&quot;$(MSBuildThisFileDirectory)tools\NuGet\NuGet.exe&quot; restore &quot;%(Solution.Identity)&quot;" />
+    <Exec Condition=" '$(OS)' == 'Unix' " Command="mono &quot;$(MSBuildThisFileDirectory)tools\NuGet\NuGet.exe&quot; restore &quot;%(Solution.Identity)&quot;" />
   </Target>
 
 </Project>

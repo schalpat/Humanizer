@@ -19,3 +19,5 @@ src/Humanizer.Tests/ApiApprover/PublicApiApprovalTest.approve_public_api.receive
 src/TestResults/*
 # Roslyn's metadata directory
 *.sln.ide/
+.DS_Store
+*.userprefs
