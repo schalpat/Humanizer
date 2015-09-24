@@ -34,10 +34,11 @@ namespace Humanizer.Bytes
         public static readonly ByteSize MaxValue = FromBits(long.MaxValue);
 
         public const long BitsInByte = 8;
-        public const long BytesInKilobyte = 1024;
-        public const long BytesInMegabyte = 1048576;
-        public const long BytesInGigabyte = 1073741824;
-        public const long BytesInTerabyte = 1099511627776;
+        public const long BytesInKilobyte = 1L << 10;
+        public const long BytesInMegabyte = 1L << 20;
+        public const long BytesInGigabyte = 1L << 30;
+        public const long BytesInTerabyte = 1L << 40;
+        public const long BytesInPetabyte = 1L << 50;
 
         public const string BitSymbol = "b";
         public const string ByteSymbol = "B";
@@ -45,6 +46,7 @@ namespace Humanizer.Bytes
         public const string MegabyteSymbol = "MB";
         public const string GigabyteSymbol = "GB";
         public const string TerabyteSymbol = "TB";
+        public const string PetabyteSymbol = "PB";
 
         public long Bits { get; private set; }
         public double Bytes { get; private set; }
@@ -52,12 +54,16 @@ namespace Humanizer.Bytes
         public double Megabytes { get; private set; }
         public double Gigabytes { get; private set; }
         public double Terabytes { get; private set; }
+        public double Petabytes { get; private set; }
 
         public string LargestWholeNumberSymbol
         {
             get
             {
                 // Absolute value is used to deal with negative values
+                if (Math.Abs(Petabytes) >= 1)
+                    return PetabyteSymbol;
+
                 if (Math.Abs(Terabytes) >= 1)
                     return TerabyteSymbol;
 
@@ -81,6 +87,9 @@ namespace Humanizer.Bytes
             get
             {
                 // Absolute value is used to deal with negative values
+                if (Math.Abs(Petabytes) >= 1)
+                    return Petabytes;
+
                 if (Math.Abs(Terabytes) >= 1)
                     return Terabytes;
 
@@ -111,6 +120,7 @@ namespace Humanizer.Bytes
             Megabytes = byteSize / BytesInMegabyte;
             Gigabytes = byteSize / BytesInGigabyte;
             Terabytes = byteSize / BytesInTerabyte;
+            Petabytes = byteSize / BytesInPetabyte;
         }
 
         public static ByteSize FromBits(long value)
@@ -141,6 +151,11 @@ namespace Humanizer.Bytes
         public static ByteSize FromTerabytes(double value)
         {
             return new ByteSize(value * BytesInTerabyte);
+        }
+
+        public static ByteSize FromPetabytes(double value)
+        {
+            return new ByteSize(value * BytesInPetabyte);
         }
 
         /// <summary>
@@ -260,6 +275,11 @@ namespace Humanizer.Bytes
         public ByteSize AddTerabytes(double value)
         {
             return this + FromTerabytes(value);
+        }
+
+        public ByteSize AddPetabytes(double value)
+        {
+            return this + FromPetabytes(value);
         }
 
         public ByteSize Subtract(ByteSize bs)
@@ -388,6 +408,10 @@ namespace Humanizer.Bytes
 
                 case TerabyteSymbol:
                     result = FromTerabytes(number);
+                    break;
+
+                case PetabyteSymbol:
+                    result = FromPetabytes(number);
                     break;
             }
 

@@ -126,5 +126,11 @@ namespace Humanizer.Tests.Bytes
         {
             Assert.Equal(ByteSize.FromTerabytes(100), ByteSize.Parse("100TB"));
         }
+
+        [Fact]
+        public void ParsePetabytes()
+        {
+            Assert.Equal(ByteSize.FromPetabytes(12), ByteSize.Parse("12PB"));
+        }
     }
 }
