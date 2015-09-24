@@ -13,6 +13,7 @@ public struct ByteSize
     public long BytesInGigabyte;
     public long BytesInKilobyte;
     public long BytesInMegabyte;
+    public long BytesInPetabyte;
     public long BytesInTerabyte;
     public string ByteSymbol;
     public string GigabyteSymbol;
@@ -20,6 +21,7 @@ public struct ByteSize
     public Humanizer.Bytes.ByteSize MaxValue;
     public string MegabyteSymbol;
     public Humanizer.Bytes.ByteSize MinValue;
+    public string PetabyteSymbol;
     public string TerabyteSymbol;
     public ByteSize(double byteSize) { }
     public long Bits { get; set; }
@@ -29,6 +31,7 @@ public struct ByteSize
     public string LargestWholeNumberSymbol { get; }
     public double LargestWholeNumberValue { get; }
     public double Megabytes { get; set; }
+    public double Petabytes { get; set; }
     public double Terabytes { get; set; }
     public Humanizer.Bytes.ByteSize Add(Humanizer.Bytes.ByteSize bs) { }
     public Humanizer.Bytes.ByteSize AddBits(long value) { }
@@ -36,6 +39,7 @@ public struct ByteSize
     public Humanizer.Bytes.ByteSize AddGigabytes(double value) { }
     public Humanizer.Bytes.ByteSize AddKilobytes(double value) { }
     public Humanizer.Bytes.ByteSize AddMegabytes(double value) { }
+    public Humanizer.Bytes.ByteSize AddPetabytes(double value) { }
     public Humanizer.Bytes.ByteSize AddTerabytes(double value) { }
     public int CompareTo(object obj) { }
     public int CompareTo(Humanizer.Bytes.ByteSize other) { }
@@ -46,6 +50,7 @@ public struct ByteSize
     public Humanizer.Bytes.ByteSize FromGigabytes(double value) { }
     public Humanizer.Bytes.ByteSize FromKilobytes(double value) { }
     public Humanizer.Bytes.ByteSize FromMegabytes(double value) { }
+    public Humanizer.Bytes.ByteSize FromPetabytes(double value) { }
     public Humanizer.Bytes.ByteSize FromTerabytes(double value) { }
     public int GetHashCode() { }
     public Humanizer.Bytes.ByteSize Parse(string s) { }

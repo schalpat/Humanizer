@@ -38,7 +38,7 @@ namespace Humanizer.Tests.Bytes
             Assert.Equal(1L << 30, result.Megabytes);
             Assert.Equal(1L << 20, result.Gigabytes);
             Assert.Equal(1L << 10, result.Terabytes);
-            Assert.Equal(1L      , result.Petabytes);
+            Assert.Equal(1L, result.Petabytes);
         }
 
         [Fact]
